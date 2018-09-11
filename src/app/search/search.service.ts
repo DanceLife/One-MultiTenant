@@ -28,9 +28,6 @@ export class SearchService {
   }
 
   runSearch(queryString){
-    console.log("Running search on: ", queryString.value);
-    //this.searchResults = this.searchEntries(queryString);
-    //this.searchResults = queryString.value;
     this.searchEntries(queryString.value)
     .subscribe(
       (response)=>{
@@ -46,7 +43,12 @@ export class SearchService {
   searchEntries(term) {
     return this.http
         .get<SearchResponse>(this.baseUrl + term + this.repoUrl) 
-      }
+  }
+
+  getActualPage(pageURL){
+    return this.http
+        .get<SearchResponse>(pageURL); 
+  }
 
 
 }

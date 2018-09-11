@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class SearchComponent implements OnInit {
   queryString: any;
+  lastQueryString: string;
   searchResults: any;
   apiLimitedExceeded: boolean; 
 
@@ -26,7 +27,7 @@ export class SearchComponent implements OnInit {
     .subscribe(
       (newSearchResults) =>
       {
-        
+        this.lastQueryString = this.queryString.value;
         let formattedSearchResults = [{}];
         this.apiLimitedExceeded = false;
         const message = newSearchResults.message ? newSearchResults.message : null;
@@ -37,17 +38,24 @@ export class SearchComponent implements OnInit {
               const thisItem = newSearchResults.items[i];
               const componentPath = thisItem.path.substring(("src/app").length,thisItem.path.lastIndexOf("/") );
               const componentRoute = this.getRoute(componentPath);
-              const itemURL = "https://dancelife.git-hub.io/One-"+ environment.appTitle + componentRoute;
+              const itemURL = "https://dancelife.github.io/One-"+ environment.appTitle + componentRoute;
+              this.searchService.getActualPage(itemURL)
+              .subscribe(
+                (response)=>{
+                  console.log("Actual Page: ",response);
+                }
+              );
               if(formattedSearchResults.indexOf(componentRoute)<0 && componentRoute!=""){
                 formattedSearchResults.push({name:itemURL,route:componentRoute});
               }
             }
             this.searchResults = formattedSearchResults;
-            console.log("this.searchResults:",this.searchResults)            
+            console.log("this.searchResults:",this.searchResults)
+                        
           }
-      });
-    
+      });   
   }
+
 
   getRoute(componentPath: string){       
     let componentRoute: string;

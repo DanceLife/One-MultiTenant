@@ -1,9 +1,9 @@
-<p *ngIf="!queryString.value && !apiLimitedExceeded">
+<p *ngIf="!queryString.value && !apiLimitedExceeded && !searchResults">
   What about entering something in the search box?
 </p>
 
 <div *ngIf="searchResults && !apiLimitedExceeded">
-
+<p>Pages containing: {{lastQueryString}}</p>
 <div *ngFor="let item of searchResults">
   <a routerLink="{{item.route}}">{{item.name}}</a>
 </div>
