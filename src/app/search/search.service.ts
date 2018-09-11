@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Http } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 
 
@@ -13,7 +14,7 @@ export class SearchService {
   queryString: string;
   newQueryString: Subject<any>;
   baseUrl: string = 'https://api.github.com/search/code?q=';
-  repoUrl: string = '+repo:DanceLife/One-Search';
+  repoUrl: string = '+repo:DanceLife/One-'+ environment.appTitle;
 
   constructor(private http: Http) { 
     this.newSearchResults = new Subject<any>();

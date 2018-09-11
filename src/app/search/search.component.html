@@ -5,8 +5,8 @@
 <div *ngIf="searchResults && !apiLimitedExceeded">
 
 <div *ngFor="let item of searchResults">
-  <a href="{{item}}">{{item}}</a>
+  <a routerLink="{{item}}">...{{item}}</a>
 </div>
 </div>
 
-<p *ngIf="apiLimitedExceeded">Limit exceeded. GitHub API has just a small amount of requests per minute. Please try again later.</p>
+<p *ngIf="apiLimitedExceeded">Limit exceeded. GitHub API has just a small amount of requests per minute. Please try again later...like in 45 seconds...</p>
