@@ -26,7 +26,8 @@ export class SearchComponent implements OnInit {
     .subscribe(
       (newSearchResults) =>
       {
-        let formattedSearchResults = [];
+        
+        let formattedSearchResults = [{}];
         this.apiLimitedExceeded = false;
         const message = newSearchResults.message ? newSearchResults.message : null;
          if(message){
@@ -34,46 +35,38 @@ export class SearchComponent implements OnInit {
           }else{
             for(let i=0; i< newSearchResults.items.length; i++){
               const thisItem = newSearchResults.items[i];
-              const componentPath = thisItem.path.toString().substring(0,thisItem.path.lastIndexOf("/"));
-              const componentName = componentPath.substring(componentPath.lastIndexOf("/")+1);
-              const componentRoute = this.getRoute(componentName);
-              const pageAddress =  "/" + componentRoute;
-
-              if(formattedSearchResults.indexOf(pageAddress)<0 && componentRoute!=""){
-                formattedSearchResults.push(pageAddress);
+              const componentPath = thisItem.path.substring(("src/app").length,thisItem.path.lastIndexOf("/") );
+              const componentRoute = this.getRoute(componentPath);
+              const itemURL = "https://dancelife.git-hub.io/One-"+ environment.appTitle + componentRoute;
+              if(formattedSearchResults.indexOf(componentRoute)<0 && componentRoute!=""){
+                formattedSearchResults.push({name:itemURL,route:componentRoute});
               }
             }
-            this.searchResults = formattedSearchResults;            
+            this.searchResults = formattedSearchResults;
+            console.log("this.searchResults:",this.searchResults)            
           }
       });
     
   }
 
-  getRoute(componentName: string){
-    const componentname = componentName.toLowerCase();
-    //only consider components related to pages
-    if("home about brand gardening space dancing".indexOf(componentname)>-1){
-    const componentName = componentname.charAt(0).toUpperCase() + componentname.substr(1);          
+  getRoute(componentPath: string){       
     let componentRoute: string;
-    //Acting router for the example
-    switch(componentName){
-        case "Brand":
-        componentRoute = "About";
+    //Reversing the routes
+    switch(componentPath){
+        case "/core/brand":
+        componentRoute = "/About";
         break;
-        case "Home":
-        componentRoute = "Home";
+        case "/core/home":
+        componentRoute = "/Home";
         break;
-        case "About":
-        componentRoute = "About";
+        case "/articles/gardening":
+        componentRoute = "/Articles/Gardening";
         break;
-        case "Gardening":
-        componentRoute = "Articles/Gardening";
+        case "/articles/space":
+        componentRoute = "/Articles/Space_Traveling";
         break;
-        case "Space":
-        componentRoute = "Articles/Space_Traveling";
-        break;
-        case "Dancing":
-        componentRoute = "Articles/Dancing";
+        case "/articles/space":
+        componentRoute = "/Articles/Dancing";
         break;
         default: 
         componentRoute = "";
@@ -82,8 +75,5 @@ export class SearchComponent implements OnInit {
       
       return componentRoute;
    }
-   return "";
-  }
-
-
+  
 }

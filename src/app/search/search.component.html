@@ -5,7 +5,7 @@
 <div *ngIf="searchResults && !apiLimitedExceeded">
 
 <div *ngFor="let item of searchResults">
-  <a routerLink="{{item}}">...{{item}}</a>
+  <a routerLink="{{item.route}}">{{item.name}}</a>
 </div>
 </div>
 
