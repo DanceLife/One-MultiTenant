@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
 import { SearchService } from "../../search/search.service";
+import { environment } from "../../../environments/environment"
 
 @Component({
     selector: 'app-navigation',
@@ -9,7 +10,7 @@ import { SearchService } from "../../search/search.service";
     styleUrls: [ 'navigation.component.scss' ]
 })
 export class NavigationComponent implements OnInit{
-    
+    title:string = environment.appTitle;
     searchForm: FormGroup;
     queryString = new FormControl();
     

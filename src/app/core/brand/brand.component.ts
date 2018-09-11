@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
   styleUrls: ['./brand.component.scss']
 })
-export class BrandComponent {}
+export class BrandComponent {
+  appTitle = "One-" + environment.appTitle;
+}

@@ -12,13 +12,7 @@
         </div>
         <div class="row">
             <div class="col-sm">
-              <p>This one is a basic implementation of a search box. There are some considerations to take into account when it comes to implementing a site search on an Angular solution. </p>
-              <p>Angular solutions are based on the concept of Single Page Applications, or SPA for short. As its name indicate this kind of applications has only a single page and the code behind (the application part of it) in charge of changing the page to become whatever the user is trying to access, usually by changing the URL, pressing a button or clicking a link. Once the user requests a “new page” the application dynamically rewrites the current page, and everything looks like if the user has navigated away into a new page, when no page reloading has ever happened in reality. This approach minimizes the interruptions related to reloading entire pages, with the responsiveness of a traditional desktop application, maintaining the look and feel of modern web applications, for a better user experience. </p>
-              <p>On the other hand, SPAs are not used on their base form in contexts where search engines indexing is either a requirement or desirable, since a search engine will only see a single and mostly empty page when crawling the application URL. </p>
-              <p>For an Angular solution to be friendly to search engine optimization (SPO) we will have to ensure some sort of precomposed content gets shipped by your server for all valid URLs in your solution. When this will be done interactibly by means of some server side code or just packed at compilation time may vary but at the end it will be kind of like compiling the site into relgular html pages just to feed the SPO. Again, how you degrade your site gracefully will vary.</p>
-              <p>To complicate matters a little bit more, some hosting services may not be supportive of server-side coding, like it is the case for GitHub.io, the service used to host the instance of the application you are currently seeing. </p>
-              <p>Here I'm parsing the static code seating on a repository at GitHub.com, and returning links pointing to GitHub.io</p>
-              <p>For this example the GitHub.com API is taking the place of what usually should be serve by a search engine on a real environment.</p>
+              <p>Here we are looking to the new Angular 6 HttpClient. No that there is anything wrong with the old HTTP client, but the new client packs a set of features that make it attractive over the old client. Features like interceptors and the capability to define the datatype to be received, with the body directly returned instead of the whole response.</p>
              </div>
         </div>
 </div>
