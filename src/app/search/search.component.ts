@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from './search.service';
-import { UpperCasePipe } from '@angular/common'
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -34,19 +34,16 @@ export class SearchComponent implements OnInit {
           }else{
             for(let i=0; i< newSearchResults.items.length; i++){
               const thisItem = newSearchResults.items[i];
-               const componentPath = thisItem.path.toString().substring(0,thisItem.path.lastIndexOf("/"));
+              const componentPath = thisItem.path.toString().substring(0,thisItem.path.lastIndexOf("/"));
               const componentName = componentPath.substring(componentPath.lastIndexOf("/")+1);
-              console.log("componentName :",componentName)              
               const componentRoute = this.getRoute(componentName);
-              console.log("componentRoute :",componentRoute)
-              const pageAddress = "https://dancelife.github.io/One-Search/" + componentRoute;
+              const pageAddress = "https://dancelife.github.io/One-" + environment.appTitle + "/" + componentRoute;
 
               if(formattedSearchResults.indexOf(pageAddress)<0 && componentRoute!=""){
                 formattedSearchResults.push(pageAddress);
               }
             }
-            this.searchResults = formattedSearchResults;
-            
+            this.searchResults = formattedSearchResults;            
           }
       });
     
