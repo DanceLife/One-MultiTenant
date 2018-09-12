@@ -23,9 +23,9 @@ import { DancingComponent } from './articles/dancing/dancing.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CoreModule,
     AuthModule,
-    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
