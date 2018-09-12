@@ -13,7 +13,8 @@ export class SearchComponent implements OnInit {
   searchResults: any;
   apiLimitedExceeded: boolean; 
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService) { 
+  }
 
   ngOnInit() {
     this.queryString = this.searchService.queryString;
@@ -29,7 +30,7 @@ export class SearchComponent implements OnInit {
       {
         this.lastQueryString = this.queryString.value;
         let formattedSearchResults = [{}];
-        this.apiLimitedExceeded = false;
+        this.apiLimitedExceeded = false; 
         const message = newSearchResults.message ? newSearchResults.message : null;
          if(message){
             this.apiLimitedExceeded = true;

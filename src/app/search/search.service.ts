@@ -26,6 +26,7 @@ export class SearchService {
       });
   }
   runSearch(queryString){
+    if(queryString.value){
     this.searchEntries(queryString.value)
     .subscribe(
       (response)=>{
@@ -36,7 +37,9 @@ export class SearchService {
         this.newSearchResults.next(error)
       }
     );
+    }
   }
+
   searchEntries(term) {
     return this.http
         .get<SearchResponse>(this.baseUrl + term + this.repoUrl) 
