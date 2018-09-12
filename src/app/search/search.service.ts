@@ -16,7 +16,6 @@ export class SearchService {
   newQueryString: Subject<any>;
   baseUrl: string = 'https://api.github.com/search/code?q=';
   repoUrl: string = '+repo:DanceLife/One-'+ environment.appTitle;
-
   constructor(private http: HttpClient) { 
     this.newSearchResults = new Subject<any>();
     this.newQueryString = new Subject<any>(); 
@@ -26,7 +25,6 @@ export class SearchService {
         this.queryString = newQueryString;
       });
   }
-
   runSearch(queryString){
     this.searchEntries(queryString.value)
     .subscribe(
@@ -39,16 +37,8 @@ export class SearchService {
       }
     );
   }
-
   searchEntries(term) {
     return this.http
         .get<SearchResponse>(this.baseUrl + term + this.repoUrl) 
   }
-
-  getActualPage(pageURL){
-    return this.http
-        .get(pageURL); 
-  }
-
-
 }
