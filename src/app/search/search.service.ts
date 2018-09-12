@@ -47,7 +47,7 @@ export class SearchService {
 
   getActualPage(pageURL){
     return this.http
-        .get<SearchResponse>(pageURL); 
+        .get(pageURL); 
   }
 
 
