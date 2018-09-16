@@ -32,7 +32,19 @@
                 <button class="btn one-search-btn my-2 my-sm-0" type="submit" data-toggle="collapse" data-target=".navbar-collapse.show">Search</button>
               </form>
             </li>
-            <li data-toggle="collapse" data-target=".navbar-collapse.show" class="dropdown">
+            <li *ngIf="displayName" data-toggle="collapse" data-target=".navbar-collapse.show" class="dropdown ">
+                <a class="nav-link  avatar-circle"  id="user-icon" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
+                        <a class='initials' > {{displayName | name2initials}}
+                        </a>
+                </a>
+                <div class="dropdown-menu navbarDropdown avatarDropdown" aria-labelledby="Register" >
+                  <a class="dropdown-item" routerLink="Register/SignUp">Account</a>
+                  <a class="dropdown-item" routerLink="Register/Options">Options</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" routerLink="SignOut">Sing Out</a>
+                </div>
+         </li>
+            <li *ngIf="!displayName" data-toggle="collapse" data-target=".navbar-collapse.show" class="dropdown">
                     <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Register
                     </a>
@@ -47,3 +59,5 @@
 </div>
 
 </nav>
+
+

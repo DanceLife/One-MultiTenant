@@ -15,6 +15,15 @@ export class AuthService {
   currentAppName = "One";
   sendEmailSubject: Subject<any>;
   verifyEmailSubject: Subject<any>;
+  authStateSubject: Subject<any>;
+
+  getAuthState(){
+    firebase.auth().onAuthStateChanged(
+      (state)=>{
+        this.authStateSubject.next(state);
+      });    
+    console.log("Current user: ",firebase.auth().currentUser)
+  }
 
   getCurrentUser(){
     console.log("Current user: ",firebase.auth().currentUser)
@@ -23,13 +32,14 @@ export class AuthService {
   actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // url: 'https://www.example.com/finishSignUp?cartId=1234',
-    url: 'http://localhost/Register/SignUp/Verifying',
+    url: 'http://localhost/VerifyingSignUp',
     handleCodeInApp: true,
   };
   
   constructor(private router: Router) {
     this.sendEmailSubject = new Subject<any>();
     this.verifyEmailSubject = new Subject<any>();
+    this.authStateSubject = new Subject<any>();
   }
 
   sendEmail(email: string){
@@ -38,7 +48,7 @@ export class AuthService {
       ()=>{
         localStorage.setItem('emailForSignIn',email);
         let onSendEmailStatus = {code: "send/succeeded", message:"Email sent and saved as: "+ email};
-        this.sendEmailSubject.next(onSendEmailStatus);
+        this.sendEmailSubject.next(onSendEmailStatus);        
       }).catch(
       (e)=>{
         this.sendEmailSubject.next({code:e.code,message:e.message});
@@ -59,27 +69,36 @@ export class AuthService {
             email = window.prompt('Please provide your email for confirmation');
           }
     try{
+          //If no email entered let's avoid internal error by no passing a null
+          email = email == null ? "" : email;
           // The client SDK will parse the code from the link for you. 
           firebase.auth().signInWithEmailLink(email, window.location.href)
-            .then(function(result) {
+            .then(
+              (result) => {
               // Clear email from storage.
-              window.localStorage.removeItem('emailForSignIn');
+              const signUpInformation = JSON.parse(localStorage.getItem('RegistrationInformation'));               
+              window.localStorage.removeItem('RegistrationInformation');
               // You can access the new user via result.user
               // Additional user info profile not available via:
               // result.additionalUserInfo.profile == null
               // You can check if the user is new or existing:
               // result.additionalUserInfo.isNewUser
+              firebase.auth().currentUser.updateProfile({displayName:signUpInformation.name,photoURL:'pending'})
+             // firebase.auth().currentUser.updatePhoneNumber              
+
               console.log("Authentication result",result)
-              this.verifyEmailSubject.next(result);
-            }).catch(function(error) {
+              this.verifyEmailSubject.next({ code:'verify/succeeded',message:'Email verification succeeded. Thank you for subscribing with us.', result: result});
+            }).catch(
+              (error) => {
               // Some error occurred, you can inspect the code: error.code
               // Common errors could be invalid email and invalid or expired OTPs.       
+              console.log("verifyEmail error",error)
+              this.verifyEmailSubject.next({code: error.code, message: error.message});
             });
         }catch(e){
-          console.log("Verifying error: ",e)
-          this.verifyEmailSubject.next(e.message);
-        }
-    
+          console.log("verifyEmail fatal error",e)
+          this.verifyEmailSubject.next(e);
+        }  
       }
   }
 

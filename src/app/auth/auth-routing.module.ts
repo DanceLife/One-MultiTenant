@@ -1,14 +1,15 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { SignUpComponent } from './signup/signup.component';
-import { VerifyingComponent } from './verifying/verifying.component';
+import { VerifyingSignUpComponent } from './verifyingsignup/verifyingsignup.component';
+import { SignOutComponent } from './signout/signout.component';
 
 const coreRoutes: Routes = [
 { path: 'Register', children: [
-    { path: ':SignUp', component: SignUpComponent,children:[
-        { path: ':Verifying', component: VerifyingComponent }
-    ] },
+    { path: ':SignUp', component: SignUpComponent},
 ] },
+{ path: ':VerifyingSignUp', component: VerifyingSignUpComponent },
+
 ];
 
 @NgModule({

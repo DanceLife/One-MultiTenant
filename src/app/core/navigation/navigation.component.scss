@@ -18,9 +18,10 @@
 
 @media (min-width: 768px){
 
-    .navbar-right .dropdown-menu{
+    .navbar-right .dropdown-menu {
         margin-left: -50%;        
     }
+
 }
 .form-inline{
     margin-top: 3px;
@@ -67,4 +68,40 @@
     border: solid;
     position: absolute; 
     margin-top: 7px;
+}
+
+.avatar-circle {
+    position:relative;
+    top: .25rem;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    border-radius: 25%;
+    -webkit-border-radius: 25%;
+    -moz-border-radius: 25%;
+  }
+  .initials {
+    position: relative;
+    font-size: 19px; /* 50% of parent */
+ 
+    font-weight: bold;
+  }
+  .avatarDropdown{
+    position: absolute;
+    top:51px;
+    left:-60px;
+  }
+  
+@media (max-width: 768px){
+
+    .avatarDropdown {
+        position: absolute;
+        top: 45px;
+        left: 0px;
+    }
+    .avatar-circle {
+        position: relative;
+        top: -5px;
+        left: 15px; 
+    }
 }

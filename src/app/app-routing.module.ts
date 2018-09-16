@@ -7,6 +7,7 @@ import { SearchComponent } from './search/search.component';
 import { GardeningComponent } from './articles/gardening/gardening.component';
 import { DancingComponent } from './articles/dancing/dancing.component';
 import { SpaceComponent } from './articles/space/space.component';
+import { SignOutComponent } from './auth/signout/signout.component';
 
 const appRoutes: Routes = [
   {path: "Register", children:[
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   ]},
   {path: "Search", component: SearchComponent},
   {path: "About", component: BrandComponent},
+  { path: 'SignOut', component: SignOutComponent},
   ];
 
 @NgModule({

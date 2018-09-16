@@ -2,12 +2,19 @@
   <div class="col-md-12">
       <div *ngIf="onSendEmailStatus.code != 'send/succeeded'" class="row">
           <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">           
-            <form  [formGroup]="loginByEmail" (ngSubmit)="onSendEmail()">
+            <h4>Sign Up Information</h4>
+            <form  [formGroup]="signUpForm" (ngSubmit)="onSendEmail()">
               <div class="form-group">
-                <label for="email">Login by email</label>
+                <label for="email">Name ( Display name )</label>
+                <div class="inputError" *ngIf="name.invalid && (name.dirty || name.touched)"> Name longer than 4 characters required.</div>
+                <input type="text" id="name" name="name" formControlName="name" class="form-control" required >
+              
+                <label for="email">Email Address</label>
+                <div class="inputError" *ngIf="email.invalid && (email.dirty || email.touched)"> A valid email required.</div>
                 <input type="email" id="email" name="email" formControlName="email" class="form-control">
+
               </div>
-              <button class="btn btn-success" type="submit" >Send</button>
+              <button class="btn btn-success" type="submit" [disabled]="!signUpForm.valid" >Send Verification Email</button>
               <span name="errorMessage" class="buttonSpan" *ngIf="onSendEmailStatus.message">{{onSendEmailStatus.message | usermessage}}</span>
             </form>        
           </div>
@@ -15,7 +22,7 @@
         <div *ngIf="onSendEmailStatus.code == 'send/succeeded'" class="row">
           <div class="col-xs-12">
             <p>
-              Check your email at {{onSendEmailSucceeded}} and click on the link to login.
+              Check your email at {{onSendEmailSucceeded}} and click on the link to login. You can close this window now if you want.
             </p>
           </div>
         </div>

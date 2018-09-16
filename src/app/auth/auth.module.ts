@@ -6,8 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
-import { VerifyingComponent } from './verifying/verifying.component';
+import { VerifyingSignUpComponent } from './verifyingsignup/verifyingsignup.component';
 import { UsermessagePipe } from './usermessage.pipe';
+import { SignOutComponent } from './signout/signout.component';
 
 @NgModule({
   imports: [
@@ -19,8 +20,9 @@ import { UsermessagePipe } from './usermessage.pipe';
   declarations: [
     SignUpComponent,
     SigninComponent,
-    VerifyingComponent,
-    UsermessagePipe, 
+    VerifyingSignUpComponent,
+    UsermessagePipe,
+    SignOutComponent, 
   ],
   providers:[
     AuthService

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppService } from '../../app.service';
 import { AuthService } from '../auth.service';
 
@@ -8,43 +8,51 @@ import { AuthService } from '../auth.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
+
 export class SignUpComponent implements OnInit {
-  emailSigninForm: FormGroup;
-  loginByEmail: FormGroup;
-  loginByPhone: FormGroup;
+  signUpForm: FormGroup;
+  get name() { return this.signUpForm.get('name') }
+  get email() { return this.signUpForm.get('email') }
+
   onSendEmailStatus = {code:"",message:""};
-  onSendEmailSucceeded:string;
-  onSendEmailResult: any;
+  signingUpActive: boolean;
 
   constructor(private appService: AppService, private authService: AuthService) { }
 
   ngOnInit() {
     //Initialize both forms, optionally used to login
-    this.loginByEmail = new FormGroup({
-      'email': new FormControl(null)
-    })
-    this.loginByPhone = new FormGroup({
-      'email': new FormControl(null)
-    })
-      //Initialize Firebase app
-      this.appService.initializeApp();
+    this.signUpForm = new FormGroup({
+      'name': new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(20)]),
+      'email': new FormControl(null, [Validators.required,Validators.email]),
+    });
 
-      //Subscribe to the send email on authService and act upon changes of sendStatus
-      this.authService.sendEmailSubject
-      .subscribe(
-        (response)=>{
-          this.onSendEmailStatus = response;
-          console.log("SendEmailSubject: ", response);
-        }
-      )
+    console.log("Form:", this.signUpForm)
 
-  }
+    //Initialize Firebase app
+    this.appService.initializeApp();
+
+    //Subscribe to the send email on authService and act upon changes of sendStatus
+    this.authService.sendEmailSubject
+    .subscribe(
+      (response)=>{
+        this.onSendEmailStatus = response;
+        console.log("SendEmailSubject: ", response);
+      });
+    }
 
   onSendEmail(){
     //reset the message just in case it was a previous error
     this.onSendEmailStatus.message = null;
-    //Get the email entered on the box and send it with authService 
-    const email = this.loginByEmail.controls["email"].value;       
-    this.authService.sendEmail(email);
+    console.log("Form:", this.signUpForm)
+    //If the form is valid then proceed
+    if(this.signUpForm.valid){
+    //Persist the information entered on the form and send the email entered on the box with authService 
+    const registrationInformation = {
+      name: this.signUpForm.controls.name.value, 
+      email: this.signUpForm.controls.email.value, 
+    }
+    localStorage.setItem('RegistrationInformation',JSON.stringify(registrationInformation));       
+    this.authService.sendEmail(registrationInformation.email);
+    }
    }
 }
