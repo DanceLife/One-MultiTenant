@@ -1,0 +1,20 @@
+<div *ngIf="!onSendEmailSucceeded" class="row">
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+   
+    <form  [formGroup]="loginByEmail" (ngSubmit)="onSendEmail()">
+      <div class="form-group">
+        <label for="email">Login by email</label>
+        <input type="email" id="email" name="email" formControlName="email" class="form-control">
+      </div>
+      <button class="btn btn-success" type="submit" >Send</button><span class="buttonSpan" *ngIf="onSendEmailError">Have you <a routerLink="/Register/Environment" >Register your Environment</a> yet?</span>
+    </form>
+
+  </div>
+</div>
+<div *ngIf="onSendEmailSucceeded" class="row">
+  <div class="col-xs-12">
+    <p>
+      Check your email at {{onSendEmailSucceeded}} and click on the link to login.
+    </p>
+  </div>
+</div>

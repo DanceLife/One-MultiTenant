@@ -40,7 +40,12 @@ export class SearchComponent implements OnInit {
               const componentPath = thisItem.path.substring(("src/app").length,thisItem.path.lastIndexOf("/") );
               const componentRoute = this.getRoute(componentPath);
               const itemURL = "https://dancelife.github.io/One-"+ environment.appTitle + componentRoute;
- 
+              this.searchService.getLivePage()
+              .subscribe(
+                (livePage)=>{
+                  console.log(livePage);
+                }
+              );
               if(formattedSearchResults.indexOf(componentRoute)<0 && componentRoute!=""){
                 formattedSearchResults.push({name:itemURL,route:componentRoute});
               }

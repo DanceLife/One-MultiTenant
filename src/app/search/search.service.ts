@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { SearchResponse } from './searchResponse.model';
 
@@ -44,4 +44,17 @@ export class SearchService {
     return this.http
         .get<SearchResponse>(this.baseUrl + term + this.repoUrl) 
   }
+
+  target = "https://www.google.com/";
+  getLivePage(){
+    return this.http
+    .get("https://us-central1-one-angular.cloudfunctions.net/proxy?url=https%3A%2F%2F" + this.target,
+    {
+       responseType: 'text',
+      headers: new HttpHeaders().set('Access-Control-Allow-Origin','*')
+    }
+    )
+    
+  }
+
 }

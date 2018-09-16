@@ -1,9 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { SignUpComponent } from './signup/signup.component';
+import { VerifyingComponent } from './verifying/verifying.component';
 
 const coreRoutes: Routes = [
-{ path: 'Register', component: SignUpComponent },
+{ path: 'Register', children: [
+    { path: ':SignUp', component: SignUpComponent,children:[
+        { path: ':Verifying', component: VerifyingComponent }
+    ] },
+] },
 ];
 
 @NgModule({
@@ -12,4 +17,4 @@ const coreRoutes: Routes = [
  ],
  exports: [RouterModule]
 })
-export class SignUpRoutingModule{}
+export class AuthRoutingModule{}

@@ -10,6 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { GardeningComponent } from './articles/gardening/gardening.component';
 import { SpaceComponent } from './articles/space/space.component';
 import { DancingComponent } from './articles/dancing/dancing.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppService } from './app.service';
+import { KeysPipe } from './keys.pipe';
 
 @NgModule({
   declarations: [
@@ -20,14 +23,18 @@ import { DancingComponent } from './articles/dancing/dancing.component';
     GardeningComponent,
     SpaceComponent,
     DancingComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     CoreModule,
     AuthModule,
   ],
-  providers: [],
+  providers: [
+    AppService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

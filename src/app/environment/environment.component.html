@@ -1,3 +1,33 @@
-<p>
-  environment works!
-</p>
+<h2>Configuring the application environment</h2>
+<p>The idea here is to initialize a firebase app to serve as the backend for this application.</p>
+<p>In a production environment this information could be hardcoded into the environment.ts files on the environments folder. This information does not have to be secure, this information contains only the pointers to your backend; however it may not be a good idea to have it seating on a public repository.</p>
+<p>Follow the steps below to configure the application environment.</p>
+<ul>
+<li>You can use your current Google account or <a href="https://accounts.google.com/signin/v2/identifier">open a new Google account</a> for this purpose. Either way, once authenticated <a href="https://firebase.com">go to firebase.com </a>in the same browser you are authenticated with your Google account</li> 
+<li>On the right top corner click on <a href="https://console.firebase.google.com"><strong>GO TO CONSOLE</strong></a></li>
+<li>If you havent yet, add a project and once into the project click the link on the top left corner <strong>Project Overview</strong> then select Project settings</li>
+<li>From the 3 buttons at the lowest portion of the page select the one reading 'Add Firebase to your web app'</li> 
+<li>On the window that pops up Click on the 'Copy' buttton on the right on it</li>
+<li>Paste the Firebase configuration below.</li>
+</ul>
+
+<form id="configForm" [formGroup]="configForm" (ngSubmit)="saveAndInitialize()">
+  <div class="form-group">
+    <textarea formControlName="configInputBox" type="text" name="textArea" id="configInputBox" cols="80" rows="16"></textarea>
+  </div>
+  <button type="submit" class="btn one-search-btn" >Initialize</button><span class="buttonSpamMessage" *ngIf="scriptBlockInformationError">{{scriptBlockInformationError}}</span>
+
+</form>
+
+<div id="currentConfiguration" >
+<h4 id="currentConfigurationHeader">Current configuration</h4>
+<div id="currentConfigurationGroup">
+  <div *ngFor="let item of configObject | keys ">
+        <b>{{item.key}}</b>: {{item.value}}
+  </div>
+</div>  
+    <button [ngClass] = "{disabled: !configObject}"  type="button" class="btn btn-danger" (click)="clearFirebaseConfiguration()">Reset</button>
+</div>
+
+<br />
+
