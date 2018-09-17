@@ -19,18 +19,13 @@ export class NavigationComponent implements OnInit{
     constructor(private router: Router, private searchService: SearchService, private authService: AuthService){}
 
     ngOnInit(): void {
-        console.log("navigation");
         this.searchForm = new FormGroup({
             'queryString': this.queryString
         })
         this.searchService.newQueryString.next(this.queryString) 
-        this.authService.authStateSubject
-        .subscribe(
-            (result)=>{
-                console.log("AuthStateSubject result: ", result)
-                this.displayName = result != null ? result.displayName : null;
-            }
-        )
+
+        this.authService.systemAuthStateSubject
+        .subscribe((result)=>{ this.displayName = result != null ? result.displayName : null;});
         
     }
 

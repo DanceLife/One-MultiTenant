@@ -31,7 +31,6 @@ export class FirebaseSystemComponent implements OnInit {
       configInputBox: new FormControl(null)
     });
     this.systemapp = this.authService.getApp("System");
-    console.log("preparing systemAppInfo with: ", this.systemapp);
     if(this.systemapp){
       this.systemAppInfo = {Application_Name:this.systemapp.name, SDK_Version: this.systemapp.firebase_.SDK_VERSION}; 
       console.log("internal environment on init system app : ", this.systemapp);

@@ -1,0 +1,33 @@
+<h2>Accessing Firebase</h2>
+<p>Any user accessing the application should have access to read from some authorize portions of the System Firebase DB. Once a user is authenticated a user should have access to more data from the System Firebase DB.</p>
+<p>Access to the user's own Firebase DB should be available once the authenticated user has initialize the configuration environment.</p>
+
+<form id="configForm" [formGroup]="configForm" (ngSubmit)="onSave()">
+  <div class="form-group">
+    <textarea formControlName="configInputBox" type="text" name="textArea" id="configInputBox" cols="80" rows="16"></textarea>
+  </div>
+  <button id="readButton"   type="button" class="btn btn-success" (click)="onRead()">Read</button>
+  <button type="submit" class="btn one-search-btn" >Save</button><span class="buttonSpamMessage" *ngIf="scriptBlockInformationError">{{scriptBlockInformationError}}</span>
+  <button id="resetButton" [ngClass] = "{disabled: !configObject}"  type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+
+</form>
+
+<div class="currentConfiguration" >
+<h4 class="currentConfigurationHeader">Current configuration</h4>
+<div class="currentConfigurationGroup">
+  <div *ngFor="let item of configObject | keys ">
+        <b>{{item.key}}</b>: {{item.value}}
+  </div>
+</div>  
+</div>
+
+<div class="currentConfiguration" >
+  <h4 class="currentConfigurationHeader">Firebase App</h4>
+  <div class="currentConfigurationGroup">   
+    <div *ngFor="let item of systemAppInfo | keys ">
+          <b>{{item.key}}</b>: {{item.value}}
+    </div>
+    </div>  
+</div>
+
+

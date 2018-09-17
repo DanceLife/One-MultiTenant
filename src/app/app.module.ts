@@ -14,6 +14,7 @@ import { AppService } from './app.service';
 import { DataModule } from './userdata/data.module';
 import { FirebaseUserComponent } from './firebase-user/firebase-user.component';
 import { FirebaseSystemComponent } from './firebase-system/firebase-system.component';
+import { PersistComponent } from './persist/persist.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FirebaseSystemComponent } from './firebase-system/firebase-system.compo
     DancingComponent,
     FirebaseSystemComponent,
     FirebaseUserComponent,
+    PersistComponent,
   ],
   imports: [
     BrowserModule,

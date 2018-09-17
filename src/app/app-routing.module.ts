@@ -8,6 +8,7 @@ import { DancingComponent } from './articles/dancing/dancing.component';
 import { SpaceComponent } from './articles/space/space.component';
 import { SignOutComponent } from './auth/signout/signout.component';
 import { FirebaseConfigComponent } from './userdata/firebaseconfig/firebaseconfig.component';
+import { PersistComponent } from './persist/persist.component';
 
 const appRoutes: Routes = [
   {path: "Register", children:[
@@ -22,7 +23,9 @@ const appRoutes: Routes = [
   {path: "Search", component: SearchComponent},
   {path: "About", component: BrandComponent},
   { path: 'SignOut', component: SignOutComponent},
-  ];
+  {path: "Persist", component: PersistComponent},
+  
+];
 
 @NgModule({
   imports: [

@@ -15,14 +15,16 @@ export class AuthService {
   appInitName: string;
   sendEmailSubject: Subject<any>;
   verifyEmailSubject: Subject<any>;
-  authStateSubject: Subject<any>;
   configObjectSubject = new Subject<{}>();
-
+  
   systemapp: any;
-
+  systemAuthStateSubject: Subject<any>;
+  
+  userapp: any;
+  userAuthStateSubject: Subject<any>;
+ 
   getApp(type){
     const appName = type + "App";
-    console.log("getting " + appName, firebase.apps);
     const systemConfigObject = this.getConfigObject(appName);
     for(let i = 0; i < firebase.apps.length; i++){
       const app = firebase.apps[i];
@@ -31,7 +33,6 @@ export class AuthService {
         return firebase.app( appName );
       }
     }
-    console.log("initializing and returning app with systemConfigObject: ", systemConfigObject)
     return this.initializeApp(appName,systemConfigObject);
   }
 
@@ -44,7 +45,7 @@ export class AuthService {
 
   initializeApp(appName, configObject){ 
     if(configObject==null){
-        console.log("initializeApp: No configuration found on localStorage. Did you enter the firebase system app configuration yet?"); //Nothing to initialize then.
+    //    console.log("initializeApp: No configuration found on localStorage. Did you enter the firebase system app configuration yet?"); //Nothing to initialize then.
         return null;
     }else{ 
         this.configObjectSubject.next(configObject);
@@ -54,7 +55,6 @@ export class AuthService {
                 apiKey: configObject.apiKey,           
                 authDomain: configObject.authDomain 
             },appName);
-            console.log("Firebase app inizialized as: ", firebase.apps);
             return firebase.app(appName);    
         }else{
             console.log("Firebase app already inizialized as: ", firebase.apps[0].name, ". If the configuration was changed restart the application.");
@@ -65,17 +65,27 @@ export class AuthService {
     }
   }
 
-  getAuthState(){
+  getSystemAuthState(){
     this.systemapp = this.getApp("System");
     if(this.systemapp){
-    console.log("Getting the systemapp", this.systemapp);    
     this.systemapp.auth().onAuthStateChanged(    
       (state)=>{
-        this.authStateSubject.next(state);
+        this.systemAuthStateSubject.next(state);
       });    
-    console.log("Current user: ",this.systemapp.auth().currentUser)
     }else{
-      console.log("No system app available yet. Did you enter the system app configuration?");
+      console.log("No System app available yet. Did you enter the system app configuration?");
+    }
+  }
+
+  getUserAuthState(){
+    this.userapp = this.getApp("User");
+    if(this.userapp){
+    this.userapp.auth().onAuthStateChanged(    
+      (state)=>{
+        this.userAuthStateSubject.next(state);
+      });    
+    }else{
+      console.log("No User app available yet. Did you enter the system app configuration?");
     }
   }
 
@@ -93,7 +103,8 @@ export class AuthService {
   constructor(private router: Router) {
     this.sendEmailSubject = new Subject<any>();
     this.verifyEmailSubject = new Subject<any>();
-    this.authStateSubject = new Subject<any>();
+    this.systemAuthStateSubject = new Subject<any>();
+    this.userAuthStateSubject = new Subject<any>();
   }
 
   sendEmail(email: string){

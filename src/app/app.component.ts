@@ -10,14 +10,12 @@ import { AppService } from './app.service';
 export class AppComponent implements OnInit{
 
   ngOnInit(): void {
-    this.authService.authStateSubject
+    this.authService.systemAuthStateSubject
     .subscribe(
       (state)=>{
-        console.log("Auth state: ", state)
+        console.log("App.Component.ts - Auth state: ", state)
       });
-      console.log("Getting auth state");
-      this.authService.getAuthState();   
-  }
+         this.authService.getSystemAuthState();   
+        }
   constructor(private authService:AuthService){}
-
 }

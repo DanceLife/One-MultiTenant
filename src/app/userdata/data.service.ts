@@ -13,10 +13,9 @@ export class DataService {
   initializeApp(){
       console.log("Step1 from data.service")
       this.configObject = JSON.parse(localStorage.getItem("firebaseConfiguration"));
-      console.log("Current fb apps :" , firebase.apps)
-  
+      
       if(this.configObject==null){
-          console.log("data service initializeApp: No configuration found on localStorage"); //Nothing to initialize then.
+        //  console.log("data service initializeApp: No configuration found on localStorage"); //Nothing to initialize then.
           return null;
       }else{ 
           this.configObjectSubject.next(this.configObject);             
