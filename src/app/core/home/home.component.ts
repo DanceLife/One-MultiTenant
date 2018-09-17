@@ -8,4 +8,5 @@ import { environment } from "../../../environments/environment";
 })
 export class HomeComponent{
     title: string = "One " + environment.appTitle;
+    
 }

@@ -17,9 +17,10 @@ export class SignUpComponent implements OnInit {
   onSendEmailStatus = {code:"",message:""};
   signingUpActive: boolean;
 
-  constructor(private appService: AppService, private authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    console.log("signup")
     //Initialize both forms, optionally used to login
     this.signUpForm = new FormGroup({
       'name': new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(20)]),
@@ -28,8 +29,8 @@ export class SignUpComponent implements OnInit {
 
     console.log("Form:", this.signUpForm)
 
-    //Initialize Firebase app
-    this.appService.initializeApp();
+    //Initialize the system app
+    this.authService.getApp("System");
 
     //Subscribe to the send email on authService and act upon changes of sendStatus
     this.authService.sendEmailSubject

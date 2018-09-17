@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -12,17 +13,70 @@ export class AuthService {
   authKey = {"apiKey": null,"authDomain": null}  
   authKeySubject = new Subject<{"apiKey": null,"authDomain": null}>();
   appInitName: string;
-  currentAppName = "One";
   sendEmailSubject: Subject<any>;
   verifyEmailSubject: Subject<any>;
   authStateSubject: Subject<any>;
+  configObjectSubject = new Subject<{}>();
+
+  systemapp: any;
+
+  getApp(type){
+    const appName = type + "App";
+    console.log("getting " + appName, firebase.apps);
+    const systemConfigObject = this.getConfigObject(appName);
+    for(let i = 0; i < firebase.apps.length; i++){
+      const app = firebase.apps[i];
+      if(app.name == appName){
+        console.log("returning existing app:",firebase.app(appName))
+        return firebase.app( appName );
+      }
+    }
+    console.log("initializing and returning app with systemConfigObject: ", systemConfigObject)
+    return this.initializeApp(appName,systemConfigObject);
+  }
+
+  getConfigObject(appName){
+    const storageKeyName = environment.appTitle + "-" + appName;
+    const configObject = JSON.parse(localStorage.getItem( storageKeyName ));
+    this.configObjectSubject.next(configObject);
+    return configObject;   
+  }
+
+  initializeApp(appName, configObject){ 
+    if(configObject==null){
+        console.log("initializeApp: No configuration found on localStorage. Did you enter the firebase system app configuration yet?"); //Nothing to initialize then.
+        return null;
+    }else{ 
+        this.configObjectSubject.next(configObject);
+
+        if(firebase.apps.length < 1 ){                         
+           firebase.initializeApp({
+                apiKey: configObject.apiKey,           
+                authDomain: configObject.authDomain 
+            },appName);
+            console.log("Firebase app inizialized as: ", firebase.apps);
+            return firebase.app(appName);    
+        }else{
+            console.log("Firebase app already inizialized as: ", firebase.apps[0].name, ". If the configuration was changed restart the application.");
+        }
+
+        return firebase.app(appName);
+
+    }
+  }
 
   getAuthState(){
-    firebase.auth().onAuthStateChanged(
+    this.systemapp = this.getApp("System");
+    if(this.systemapp){
+    console.log("Getting the systemapp", this.systemapp);    
+    this.systemapp.auth().onAuthStateChanged(    
       (state)=>{
         this.authStateSubject.next(state);
       });    
-    console.log("Current user: ",firebase.auth().currentUser)
+    console.log("Current user: ",this.systemapp.auth().currentUser)
+    }else{
+      console.log("No system app available yet. Did you enter the system app configuration?");
+    }
   }
 
   getCurrentUser(){
@@ -44,7 +98,8 @@ export class AuthService {
 
   sendEmail(email: string){
     try{
-    firebase.auth().sendSignInLinkToEmail(email, this.actionCodeSettings).then(
+    this.systemapp != null ? this.systemapp : this.getApp("System");
+    this.systemapp.auth().sendSignInLinkToEmail(email, this.actionCodeSettings).then(
       ()=>{
         localStorage.setItem('emailForSignIn',email);
         let onSendEmailStatus = {code: "send/succeeded", message:"Email sent and saved as: "+ email};
@@ -60,7 +115,8 @@ export class AuthService {
 
   verifyEmail(){
         // Confirm the link is a sign-in with email link.
-        if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+        this.systemapp != null ? this.systemapp : this.getApp("System");    
+        if (this.systemapp.auth().isSignInWithEmailLink(window.location.href)) {
           var email = localStorage.getItem('emailForSignIn');
           console.log("localStorage emailForSignIn returned", email);
           if (!email) {
@@ -68,11 +124,12 @@ export class AuthService {
             // attacks, ask the user to provide the associated email again. For example:
             email = window.prompt('Please provide your email for confirmation');
           }
-    try{
+
+          try{
           //If no email entered let's avoid internal error by no passing a null
           email = email == null ? "" : email;
           // The client SDK will parse the code from the link for you. 
-          firebase.auth().signInWithEmailLink(email, window.location.href)
+          this.systemapp.auth().signInWithEmailLink(email, window.location.href)
             .then(
               (result) => {
               // Clear email from storage.
@@ -83,7 +140,7 @@ export class AuthService {
               // result.additionalUserInfo.profile == null
               // You can check if the user is new or existing:
               // result.additionalUserInfo.isNewUser
-              firebase.auth().currentUser.updateProfile({displayName:signUpInformation.name,photoURL:'pending'})
+              this.systemapp.auth().currentUser.updateProfile({displayName:signUpInformation.name,photoURL:'pending'})
              // firebase.auth().currentUser.updatePhoneNumber              
 
               console.log("Authentication result",result)
@@ -119,7 +176,8 @@ export class AuthService {
   }
 
   logout() {
-    firebase.auth().signOut();
+    this.systemapp != null ? this.systemapp : this.getApp("System");  
+    this.systemapp.auth().signOut();
     this.token = null;
   }
 

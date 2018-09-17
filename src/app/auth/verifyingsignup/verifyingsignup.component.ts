@@ -11,10 +11,11 @@ import { ActivatedRoute } from '@angular/router';
 export class VerifyingSignUpComponent implements OnInit {
   verifyEmailResult:any = {code:null, message:null};
  
-  constructor(private appService:AppService, private authService: AuthService, private activatedRoute: ActivatedRoute) { }
+  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.appService.initializeApp();
+    console.log("verifyingsignup")
+        
     this.verifyEmailResult = null;
     this.authService.verifyEmailSubject.subscribe(
      (result)=>{

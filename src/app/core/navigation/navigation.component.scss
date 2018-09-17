@@ -72,9 +72,9 @@
 
 .avatar-circle {
     position:relative;
-    top: .25rem;
-    width: 35px;
-    height: 35px;
+    top: .45rem;
+    width: 15px;
+    height: 15px;
     text-align: center;
     border-radius: 25%;
     -webkit-border-radius: 25%;
@@ -82,7 +82,7 @@
   }
   .initials {
     position: relative;
-    font-size: 19px; /* 50% of parent */
+    font-size: 16px; /* 50% of parent */
  
     font-weight: bold;
   }

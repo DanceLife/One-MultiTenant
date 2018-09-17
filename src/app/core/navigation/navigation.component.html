@@ -12,7 +12,6 @@
 <div class="collapse navbar-collapse" id="collapsing-navbar" >
     <ul class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show" >
         <li class="nav-item" ><a class="nav-link" routerLink="/Home">Home</a></li>
-        <li class="nav-item" ><a class="nav-link" routerLink="/About">About</a></li>
         <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle "  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Articles
@@ -24,7 +23,8 @@
                   <a class="dropdown-item" routerLink="/Articles/Space_Traveling">Space Traveling</a>
                 </div>
               </li>
-    </ul>
+              <li class="nav-item" ><a class="nav-link" routerLink="/About">About</a></li>
+            </ul>
     <ul class="navbar-nav navbar-right">
         <li> 
             <form [formGroup]="searchForm" class="form-inline" (ngSubmit)="OnSearch()" >
@@ -40,6 +40,7 @@
                 <div class="dropdown-menu navbarDropdown avatarDropdown" aria-labelledby="Register" >
                   <a class="dropdown-item" routerLink="Register/SignUp">Account</a>
                   <a class="dropdown-item" routerLink="Register/Options">Options</a>
+                  <a class="dropdown-item" routerLink="Register/Firebase">Firebase</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" routerLink="SignOut">Sing Out</a>
                 </div>
@@ -50,9 +51,8 @@
                     </a>
                     <div class="dropdown-menu navbarDropdown" aria-labelledby="Register" >
                       <a class="dropdown-item" routerLink="Register/SignUp">SignUp</a>
-                      <a class="dropdown-item" routerLink="Register/Options">Options</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" routerLink="Register/Environment">Environment</a>
+                      <a class="dropdown-item" routerLink="Register/Options">Options</a>   
                     </div>
              </li>
     </ul>    

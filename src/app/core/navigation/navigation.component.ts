@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit{
     constructor(private router: Router, private searchService: SearchService, private authService: AuthService){}
 
     ngOnInit(): void {
+        console.log("navigation");
         this.searchForm = new FormGroup({
             'queryString': this.queryString
         })

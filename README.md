@@ -10,5 +10,5 @@ Go into a root folder of your choice and run the following lines
 `cd One-MultiTenant` <br />
 `npm install` <br />
 `npm install firebase angularfire2 @types/firebase` <br />
-`ng serve -o` <br />
+`ng serve --port 80 -o` <br />
 

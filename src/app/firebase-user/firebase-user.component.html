@@ -1,4 +1,4 @@
-<h2>Configuring the application environment</h2>
+<h2>Configuring Firebase</h2>
 <p>The idea here is to initialize a firebase app to serve as the backend for this application.</p>
 <p>In a production environment this information could be hardcoded into the environment.ts files on the environments folder. This information does not have to be secure, this information contains only the pointers to your backend; however it may not be a good idea to have it seating on a public repository.</p>
 <p>Follow the steps below to configure the application environment.</p>
@@ -19,15 +19,23 @@
 
 </form>
 
-<div id="currentConfiguration" >
-<h4 id="currentConfigurationHeader">Current configuration</h4>
-<div id="currentConfigurationGroup">
+<div class="currentConfiguration" >
+<h4 class="currentConfigurationHeader">Current configuration</h4>
+<div class="currentConfigurationGroup">
   <div *ngFor="let item of configObject | keys ">
         <b>{{item.key}}</b>: {{item.value}}
   </div>
 </div>  
-    <button [ngClass] = "{disabled: !configObject}"  type="button" class="btn btn-danger" (click)="clearFirebaseConfiguration()">Reset</button>
 </div>
 
-<br />
+<div class="currentConfiguration" >
+  <h4 class="currentConfigurationHeader">Firebase App</h4>
+  <div class="currentConfigurationGroup">   
+    <div *ngFor="let item of systemAppInfo | keys ">
+          <b>{{item.key}}</b>: {{item.value}}
+    </div>
+      <button id="resetButton" [ngClass] = "{disabled: !configObject}"  type="button" class="btn btn-danger" (click)="clearfirebaseInternalConfiguration()">Reset</button>
+    </div>  
+</div>
+
 

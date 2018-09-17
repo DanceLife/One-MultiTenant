@@ -1,31 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AppService } from '../app.service';
-
+import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-environment',
-  templateUrl: './environment.component.html',
-  styleUrls: ['./environment.component.scss']
+  selector: 'app-firebaseconfig',
+  templateUrl: './firebaseconfig.component.html',
+  styleUrls: ['./firebaseconfig.component.scss']
 })
-export class EnvironmentComponent implements OnInit {
+export class FirebaseConfigComponent implements OnInit {
   configForm: FormGroup;
   configObject: any;
   scriptBlockInformationError: string;
   firebaseConfigKeys = ['apiKey','authDomain','databaseURL','projectId','storageBucket','messagingSenderId'];
- 
+
   testObject = {test:'test',test2:'test2'};
 
-  constructor(private appService: AppService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {  
-    this.appService.configObjectSubject.subscribe(
+    this.dataService.configObjectSubject.subscribe(
       (config)=>{this.configObject = config}
     )
     this.configForm = new FormGroup({
       configInputBox: new FormControl(null)
     });
-    this.appService.initializeApp();
+    this.dataService.initializeApp();
+  }
+
+  clearfirebaseInternalConfiguration(){
+    localStorage.removeItem("firebaseConfiguration");
+    this.configObject = null;
   }
 
   saveAndInitialize(){
@@ -38,13 +42,8 @@ export class EnvironmentComponent implements OnInit {
       if(!this.scriptBlockInformationError){
         const configObjectStringified = JSON.stringify(this.configObject);
         localStorage.setItem("firebaseConfiguration",configObjectStringified);
-        this.appService.initializeApp();
+        this.dataService.initializeApp();
       }
-  }
-
-  clearFirebaseConfiguration(){
-    localStorage.removeItem("firebaseConfiguration");
-    this.configObject = null;
   }
 
   scriptBlockToObject(scriptBlock){
@@ -65,4 +64,5 @@ export class EnvironmentComponent implements OnInit {
     console.log("configObject: ",configObject);
     return configObject;
   }
+ 
 }

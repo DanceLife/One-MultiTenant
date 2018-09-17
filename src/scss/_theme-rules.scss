@@ -97,8 +97,11 @@ transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     max-width: 95%!important;        
  }
  .avatar-circle {
-     background-color: $navbarBorder;
+     background-color: $avatarCircleBG;
  }
  .initials{
      color:$searchBtnFont!important
+ }
+ .avatar-circle:hover {
+    background-color:$searchBtnBG-Hover
  }

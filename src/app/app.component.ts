@@ -10,17 +10,14 @@ import { AppService } from './app.service';
 export class AppComponent implements OnInit{
 
   ngOnInit(): void {
-    this.appService.initializeApp();
     this.authService.authStateSubject
     .subscribe(
       (state)=>{
         console.log("Auth state: ", state)
       });
       console.log("Getting auth state");
-      this.authService.getAuthState();
-    
+      this.authService.getAuthState();   
   }
-  constructor(private authService:AuthService, private appService:AppService){}
+  constructor(private authService:AuthService){}
 
-  title = 'One-Navigation';
 }
