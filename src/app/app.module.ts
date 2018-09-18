@@ -11,10 +11,10 @@ import { SpaceComponent } from './articles/space/space.component';
 import { DancingComponent } from './articles/dancing/dancing.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppService } from './app.service';
-import { DataModule } from './userdata/data.module';
 import { FirebaseUserComponent } from './firebase-user/firebase-user.component';
 import { FirebaseSystemComponent } from './firebase-system/firebase-system.component';
 import { PersistComponent } from './persist/persist.component';
+import { KeysPipe } from './shared/keys.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { PersistComponent } from './persist/persist.component';
     FirebaseSystemComponent,
     FirebaseUserComponent,
     PersistComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
@@ -34,10 +35,9 @@ import { PersistComponent } from './persist/persist.component';
     HttpClientModule,
     CoreModule,
     AuthModule,
-    DataModule
   ],
   providers: [
-    AppService
+    AppService,
   ],
   bootstrap: [AppComponent]
 })

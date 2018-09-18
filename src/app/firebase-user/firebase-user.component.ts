@@ -21,9 +21,20 @@ export class FirebaseUserComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+console.log("firebase-user.component landed")
+    this.authService.userAuthStateSubject
+    .subscribe(
+      (state)=>{
+        console.log("firebase-user.component.ts - User Auth state: ", state)
+      });
+      this.authService.getUserAuthState();   
+        
+      
+
+
     this.authService.configObjectSubject.subscribe(
       (config)=>{
-        console.log("internaconfig received as :");
+        console.log("internalConfig received as :");
         console.log(config);
         this.configObject = config
       });
